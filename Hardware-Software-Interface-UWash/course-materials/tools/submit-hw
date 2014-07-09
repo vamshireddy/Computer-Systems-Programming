@@ -36,7 +36,7 @@ def parse_cmd_args():
     parser.add_argument('-f', '--force', action='store_true',
                         help='Submit without prompts.')
     parser.add_argument('--course_materials', type=filepath,
-                        default='/home/vamshi/Low-Level-Systems-Programming/UWash-Hw-Sw-Interface/course-materials',
+                        default='/home/vamshi/Low-Level-Systems-Programming/Hardware-Software-Interface-UWash/course-materials',
                         help='Path to course materials directory.')
 
     return parser.parse_args()
