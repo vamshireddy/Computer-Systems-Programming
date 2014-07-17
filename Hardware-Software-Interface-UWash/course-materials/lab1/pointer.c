@@ -1,7 +1,7 @@
 /*
  * CSE 351 HW1 (Data Lab - Pointers)
  *
- * <Please put your name and userid here>
+ * <Vamshi k.vamshi2008@gmail.com>
  *
  * pointer.c - Source file with your solutions to the Lab.
  *          This is the file you will hand in to your instructor.
@@ -81,36 +81,27 @@ INTEGER CODING RULES:
  * Return the size of an integer in bytes.
  */
 int intSize() {
-  int intArray[10];
-  int * intPtr1;
-  int * intPtr2;
-  // TODO: Write code to compute size of an integer.
-
-  return 2;
+  /*
+  	Returns the size of the integer
+  */
+  int a[2];
+  return ((long)&a[1]-(long)&a[0]);
 }
 
 /*
  * Return the size of a double in bytes.
  */
 int doubleSize() {
-  double doubArray[10];
-  double * doubPtr1;
-  double * doubPtr2;
-  // TODO: Write code to compute size of a double.
-
-  return 2;
+  double a[2];
+  return ((long)&a[1] - (long)&a[0]);
 }
 
 /*
  * Return the size of a pointer in bytes.
  */
 int pointerSize() {
-  double * ptrArray[10];
-  double ** ptrPtr1;
-  double ** ptrPtr2;
-  // TODO: Write code to compute size of a pointer.
-
-  return 2;
+  int* p[2];
+  return ((long)&p[1] - (long)&p[0]);
 }
 
 /*
@@ -120,10 +111,9 @@ int pointerSize() {
 int changeValue() {
   int intArray[10];
   int * intPtr1 = intArray;
-  int * intPtr2;
   // TODO: Write code to change value of intArray[5] to 351 using only
   //       intPtr1 and the + operator.
-
+  *(intPtr1+5) = 351; 
   return intArray[5];
 }
 
@@ -135,8 +125,10 @@ int changeValue() {
  * Operators / and % and loops are NOT allowed.
  */
 int withinSameBlock(int * ptr1, int * ptr2) {
-  // TODO
-  return 2;
+	unsigned long l1 = ptr1;
+	unsigned long l2 = ptr2;
+	long mask = 0x3F;
+	return ((l1 & ~mask) == (l2 & ~mask)); 
 }
 
 /*
@@ -144,15 +136,61 @@ int withinSameBlock(int * ptr1, int * ptr2) {
  * 0 otherwise.
  */
 int withinArray(int * intArray, int size, int * ptr) {
-  // TODO
-  return 2;
+	
 }
+
 /*
  * Return x with the n bits that begin at position p inverted (i.e.,
  * turn 0 into 1 and vice versa) and the rest left unchanged. Consider
  * the indices of x to begin with the low-order bit numbered as 0.
  */
+
 int invert(int x, int p, int n) {
-  // TODO
-  return 2;
+
+	// Check if 'n' is 0 or not
+	int n_val = n;
+	int temp1 = 1;
+	int masker = 0;
+	
+	n = n | ( n >> 16 );
+	n = n | ( n >> 8 );
+	n = n | ( n >> 4 );
+	n = n | ( n >> 2 );
+	n = n | ( n >> 1 );
+	n = ( n << 31 ) >> 31;
+
+	//printf(" n is %x\n",n);
+
+	// 1 in MSB
+	temp1 = 1 << 31;
+
+	// Form masker 
+	masker = temp1 >> (32-n_val-p-1);
+	
+	//printf("Masker is %x\n",masker);
+	
+	temp1 = temp1 >> (n_val-1);
+
+	//printf("xor bit string is %x\n",temp1);
+
+	temp1 = temp1 >> (32-n_val-p);
+
+	//printf("xor bit string positioned properly %x",temp1);
+	
+	temp1 = temp1 & ~ masker;
+
+	//printf("temp final is %x\n",temp1);
+
+	temp1 = ( n & temp1 );
+	//printf("After checking temp is %x\n",temp1);
+	return x ^ temp1;
 }
+/*
+int main()
+{
+	int a = 0xFFFFFFFF;
+	int n = 0;
+	int p = 16;
+	printf("From pos %d and %d digits \nResult is %x\n\n",p,n,invert(a,p,n));
+}
+*/

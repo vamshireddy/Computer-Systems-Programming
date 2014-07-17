@@ -3,7 +3,7 @@
  * 
  * <Vamshi k.vamshi2008@gmail.com>
  * 
- * bits.c - Source file with your solutions to the Lab.
+* bits.c - Source file with your solutions to the Lab.
  *          This is the file you will hand in to your instructor.
  *
  * WARNING: Do not include the <stdio.h> header; it confuses the dlc
@@ -113,7 +113,7 @@ NOTES:
 #endif
 // Rating: 1
 /* 
- * bitAnd - x&y using only ~ and | 
+ *   bitAnd - x&y using only ~ and | 
  *   Example: bitAnd(6, 5) = 4
  *   Legal ops: ~ |
  *   Max ops: 8
@@ -126,7 +126,7 @@ int bitAnd(int x, int y) {
  return ~(~x|~y);
 }
 /* 
- * bitXor - x^y using only ~ and & 
+ *   bitXor - x^y using only ~ and & 
  *   Example: bitXor(4, 5) = 1
  *   Legal ops: ~ &
  *   Max ops: 14
@@ -153,14 +153,14 @@ int thirdBits(void) {
   	This sets every 3 bit starting from the LSB and returns the result
   */
   int result = 0;
-  int mask = 0xFFFFFF00;
   int setter1 = 0x49;
   int setter2 = 0x24;
   int setter3 = 0x92;
+
   result = result | setter1;
-  result = (( result << 8 ) & mask) | setter2;
-  result = (( result << 8 ) & mask) | setter3;
-  result = (( result << 8 ) & mask) | setter1;
+  result = result << 8 | setter2;
+  result = result << 8 | setter3;
+  result = result << 8 | setter1;
   return result;
 }
 // Rating: 2
@@ -174,7 +174,9 @@ int thirdBits(void) {
  *   Rating: 2
  */
 int fitsBits(int x, int n) {
-  return 2;
+	n = n + ~0;
+	x = x >> n;
+	return (x == 0 || x==1 );
 }
 /* 
  * sign - return 1 if positive, 0 if zero, and -1 if negative
@@ -185,7 +187,27 @@ int fitsBits(int x, int n) {
  *  Rating: 2
  */
 int sign(int x) {
-  return 2;
+	/* 
+	1. Extract the sign of the number by shifting by 31. This will extend the sign bit to all of the bits in the number 
+	2. This will result in either all 0's or all 1's.
+	3. If all 1's ( -1 )then return the number as it is as it matches with the spec.
+	4. But we can't differentiate the postive and 0 by all 0's 
+	5. If its positive, check whether any bit is set in the last 31 bits 
+	6. If any, then return 1, else return 0
+	7. To check, use the logarithmic or'ing as described below
+	8. If any bit is set in the number, it set's the LSB to 1, else it sets to 0
+	*/
+	
+	int p = x >> 31;
+	x = (x << 1);
+	x = x | ( x >> 16 );
+	x = x | ( x >> 8 );
+	x = x | ( x >> 4 );
+	x = x | ( x >> 2 );
+	x = x | ( x >> 1 );
+	x = x & 1;
+	int result = (~p & x) + p;
+	return result;
 }
 /* 
  * getByte - Extract byte n from word x
@@ -197,9 +219,9 @@ int sign(int x) {
  */
 int getByte(int x, int n) {
   
-  int result = x >> (n*8);
-  int mask = 0x000000FF;
-
+  int byte_pow  = n<<3;
+  int result = x >> byte_pow;
+  int mask = 0xFF;
   return result & mask;
 }
 // Rating: 3
@@ -212,7 +234,20 @@ int getByte(int x, int n) {
  *   Rating: 3 
  */
 int logicalShift(int x, int n) {
-  return -1;
+	
+	int p = n;
+	n = n | ( n >> 16 );
+	n = n | ( n >> 8 );
+	n = n | ( n >> 4 );
+	n = n | ( n >> 2 );
+	n = n | ( n >> 1 );
+	n = (n << 31) >> 31;
+
+	int temp = ( n & ( ( 1 << 31 ) >> ( p+~0 ) ) ) +  ( ~n & 0);
+
+	x = x >> p;
+	x = x & ~temp;
+	return x;
 }
 /* 
  * addOK - Determine if can compute x+y without overflow
@@ -223,7 +258,7 @@ int logicalShift(int x, int n) {
  *   Rating: 3
  */
 int addOK(int x, int y) {
-  return 2;
+	
 }
 // Rating: 4
 /* 
@@ -249,7 +284,7 @@ int conditional(int x, int y, int z) {
 }
 // Extra Credit: Rating: 4
 /*
- * isPower2 - returns 1 if x is a power of 2, and 0 otherwise
+ *   isPower2 - returns 1 if x is a power of 2, and 0 otherwise
  *   Examples: isPower2(5) = 0, isPower2(8) = 1, isPower2(0) = 0
  *   Note that no negative number is a power of 2.
  *   Legal ops: ! ~ & ^ | + << >>
@@ -259,3 +294,9 @@ int conditional(int x, int y, int z) {
 int isPower2(int x) {
 	return 0;
 }
+/*
+int main()
+{
+	printf("input is 0x80000000 and output is %x\n",logicalShift(0x80000000,0));
+}
+*/
