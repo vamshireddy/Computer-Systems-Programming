@@ -314,7 +314,7 @@ int isPower2(int x) {
 	
 
 	int neg = (x >> 31); 
-	int r = x;
+
 //	printf("init : %x\n",x);
 	int p = x + ~0;
 	int result = x & p;
@@ -331,15 +331,7 @@ int isPower2(int x) {
 
 	result = (result << 31)>>31;
 //	printf("\n\n%x\n\n",result);
-
-	r = r | ( r >> 16 );
-	r = r | ( r >> 8 );
-	r = r | ( r >> 4 );
-	r = r | ( r >> 2 );
-	r = r | ( r >> 1 );
-	r = (r<<31) >> 31;
-	
-	output =  (  ( ~r&0 ) + ( r & (( ~neg & ( (~result & 1) + (result & 0) ) ) + ( neg & 0 ))));
+	output =  ( ~neg & ( (~result & 1) + (result & 0) ) ) + ( neg & 0 );
 	return output;
 }
 /*

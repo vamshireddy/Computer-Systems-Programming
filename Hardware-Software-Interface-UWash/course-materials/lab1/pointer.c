@@ -85,15 +85,15 @@ int intSize() {
   	Returns the size of the integer
   */
   int a[2];
-  return ((long)&a[1]-(long)&a[0]);
+  return ((long)(a+1)-(long)a);
 }
 
 /*
- * Return the size of a double in bytes.
+	 * Return the size of a double in bytes.
  */
 int doubleSize() {
   double a[2];
-  return ((long)&a[1] - (long)&a[0]);
+  return ((long)(a+1) - (long)a);
 }
 
 /*
@@ -101,7 +101,7 @@ int doubleSize() {
  */
 int pointerSize() {
   int* p[2];
-  return ((long)&p[1] - (long)&p[0]);
+  return ((long)(p+1) - (long)p);
 }
 
 /*
@@ -136,7 +136,9 @@ int withinSameBlock(int * ptr1, int * ptr2) {
  * 0 otherwise.
  */
 int withinArray(int * intArray, int size, int * ptr) {
+
 	
+
 }
 
 /*
