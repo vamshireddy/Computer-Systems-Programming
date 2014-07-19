@@ -2,4 +2,4 @@
 ####In Progress
 =============================
 
-Working with lower levels of abstraction in computer systems digging all the internal details of how computer programs are assembled and executed on processors.
+Dealing with the lower levels of abstraction -- C, Assembly, Processes, UNIX System calls, etc.
