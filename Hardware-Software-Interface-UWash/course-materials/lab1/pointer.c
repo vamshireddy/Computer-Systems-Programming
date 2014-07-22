@@ -136,9 +136,6 @@ int withinSameBlock(int * ptr1, int * ptr2) {
  * 0 otherwise.
  */
 int withinArray(int * intArray, int size, int * ptr) {
-
-	
-
 }
 
 /*
