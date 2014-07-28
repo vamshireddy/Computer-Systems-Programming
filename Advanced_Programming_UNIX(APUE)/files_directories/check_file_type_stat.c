@@ -13,7 +13,7 @@ int main(int argc, char* argv[])
 	{
 		printf("%s - ",argv[i]);
 		
-		if( stat(argv[i],&status) == -1 )
+		if( lstat(argv[i],&status) == -1 )
 		{
 			perror("");
 			exit(0);
