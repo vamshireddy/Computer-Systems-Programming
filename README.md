@@ -1,7 +1,8 @@
 Computer-Systems-Programming
 ============================
-### This repo contains all the codes which involve working with low level abstractions like C, Assembly, File I/0, Process Handling, Bit Manipulations, x86-64 implementations, Signal handling, System calls, etc.
-####Contents
-* Advanced programming in Unix Environment Practice
-* University of Washington Hardware Software interface Codes
-* K&R Practice
+### This repo contains codes which involve working with low level abstractions in UNIX like C, Assembly, File I/0, Process Handling, Bit Manipulations, x86-64 implementations, Signal handling, System calls, etc.
+#### This repo contains
+* ***Advanced programming in UNIX Environment (APUE) Practice*** - Bible for Systems stuff ( I love working on this )
+* ***University of Washington Hardware Software interface Practice*** - Best course i have ever taken, it deals with low-level stuff like diffusing binary bombs, handling memory management issues, bit manipulations, a lot more...
+* ***K&R C Practice*** - _/\_ Brainfood for programming.
+* ***Miscellaneous UNIX programs***
